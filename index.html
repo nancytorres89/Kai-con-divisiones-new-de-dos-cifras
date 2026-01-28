@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Kai y los Números Gigantes</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(#1e3c72, #2a5298);
+      color: white;
+      text-align: center;
+      margin: 0;
+    }
+
+    .app {
+      background: rgba(0,0,0,0.35);
+      padding: 20px;
+      max-width: 520px;
+      margin: 40px auto;
+      border-radius: 18px;
+    }
+
+    #story {
+      font-size: 18px;
+      margin: 20px 0;
+    }
+
+    #question {
+      font-size: 22px;
+      margin-bottom: 10px;
+    }
+
+    input {
+      padding: 8px;
+      font-size: 18px;
+      width: 120px;
+      text-align: center;
+      border-radius: 8px;
+      border: none;
+    }
+
+    button {
+      padding: 8px 16px;
+      font-size: 16px;
+      margin-left: 10px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      background-color: #ffd700;
+    }
+
+    #message {
+      margin-top: 15px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="app">
+  <h1>🧙‍♂️ Kai y los Números Gigantes</h1>
+
+  <div id="story"></div>
+
+  <div id="challenge">
+    <p id="question"></p>
+    <input type="number" id="answer" placeholder="Respuesta">
+    <button onclick="checkAnswer()">Resolver</button>
+  </div>
+
+  <p id="message"></p>
+</div>
+
+<script>
+  let correctAnswer = 0;
+  let level = 1;
+
+  const stories = [
+    "🚨 Kai entra al Reino Prohibido. Un número gigante bloquea el camino.",
+    "🐉 Un dragón matemático exige una división perfecta.",
+    "⚔️ El guardián supremo prueba la inteligencia de Kai.",
+    "👑 El Consejo de Numeria lanza el desafío final."
+  ];
+
+  function generateChallenge() {
+    const divisorOptions = [18, 20, 21, 24, 25, 30, 36];
+    const divisor = divisorOptions[Math.floor(Math.random() * divisorOptions.length)];
+    const result = Math.floor(Math.random() * 6) + 4; // entre 4 y 9
+    const dividend = divisor * result;
+
+    correctAnswer = result;
+
+    document.getElementById("story").innerText =
+      stories[Math.min(level - 1, stories.length - 1)];
+
+    document.getElementById("question").innerText =
+      `${dividend} ÷ ${divisor} =`;
+
+    document.getElementById("answer").value = "";
+    document.getElementById("message").innerText = "";
+  }
+
+  function checkAnswer() {
+    const userAnswer = Number(document.getElementById("answer").value);
+
+    if (userAnswer === correctAnswer) {
+      document.getElementById("message").innerText =
+        "✅ ¡Correcto! Kai avanza al siguiente desafío.";
+      level++;
+      setTimeout(generateChallenge, 1500);
+    } else {
+      document.getElementById("message").innerText =
+        "❌ Kai dice: descompón el número y vuelve a intentar.";
+    }
+  }
+
+  generateChallenge();
+</script>
+
+</body>
+</html>
